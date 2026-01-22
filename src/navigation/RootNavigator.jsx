@@ -9,8 +9,14 @@ export default function RootNavigator() {
 
     return (
         <Tabs.Navigator>
-            <Tabs.Screen name="HomeTab" component={HomeNavigator} />
+            <Tabs.Screen
+                name="HomeTab"
+                component={HomeNavigator}
+                options={{ headerShown: false }}
+            />
+
             <Tabs.Screen name="Cart" component={CartScreen} />
+            
             <Tabs.Screen name="Info" component={InfoScreen} />
         </Tabs.Navigator>
     );
