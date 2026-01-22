@@ -1,7 +1,9 @@
 import { ScrollView, StyleSheet, Text, View } from 'react-native';
 import { } from 'react-native-web';
-import { featuredItems } from '../data/menuItems';
+import { featuredItems, getItemsByCategory } from '../data/menuItems';
 import Card from '../components/Card';
+import { categories } from '../data/categoriesData';
+import CategoryCard from '../components/CategoryCard';
 
 export default function HomeScreen() {
     return (
@@ -29,6 +31,14 @@ export default function HomeScreen() {
             </View>
 
             {/* Category Section */}
+            <View style={styles.section}>
+                <Text style={styles.sectionTitle}>Categories</Text>
+                {categories.map((category) => {
+                    const itemCount = getItemsByCategory(category.id).length;
+
+                    return <CategoryCard key={category.id} itemCount={itemCount} {...category} />
+                })}
+            </View>
         </ScrollView>
     );
 }
