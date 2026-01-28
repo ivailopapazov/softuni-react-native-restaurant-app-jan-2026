@@ -2,11 +2,14 @@ import { ScrollView, Text, View, Image, StyleSheet } from "react-native";
 
 import { getItemById } from "../data/menuItems";
 import Button from "../components/Button";
+import QuantityStepper from "../components/QuantityStepper";
+import { useState } from "react";
 
 export default function DetailsScreen({
     route,
     navigation,
 }) {
+    const [quantity, setQuantity] = useState(1);
     const { itemId } = route.params;
 
     const item = getItemById(itemId);
@@ -31,7 +34,11 @@ export default function DetailsScreen({
 
                     <View style={styles.qtySection}>
                         <Text style={styles.qtyLabel}>Quantity</Text>
-                        <Text> - 1 + </Text>
+                        <QuantityStepper
+                            qty={quantity}
+                            onIncrement={() => setQuantity(quantity + 1)}
+                            onDecrement={() => setQuantity(quantity - 1)}
+                        />
                     </View>
                 </View>
 
@@ -44,14 +51,14 @@ export default function DetailsScreen({
                         <Button
                             title="Add to Cart"
                             style={styles.addButton}
-                            // todo add onPress handler
+                        // todo add onPress handler
                         />
                         <Button
                             title="View Cart"
                             variant="outline"
                             style={styles.viewCartButton}
                             // todo add onPress handler
-                            onPress={() =>navigation.navigate('CartModal')}
+                            onPress={() => navigation.navigate('CartModal')}
                         />
                     </View>
                 </View>
