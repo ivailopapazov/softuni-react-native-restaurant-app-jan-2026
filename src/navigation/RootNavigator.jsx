@@ -1,43 +1,23 @@
-import { createBottomTabNavigator } from "@react-navigation/bottom-tabs";
-
-import HomeNavigator from "./HomeNavigator";
+import { createNativeStackNavigator } from "@react-navigation/native-stack";
+import TabNavigator from "./TabNavigator";
 import CartScreen from "../screens/CartScreen";
-import InfoScreen from "../screens/InfoScreen";
-import { Ionicons } from "@expo/vector-icons";
 
 export default function RootNavigator() {
-    const Tabs = createBottomTabNavigator();
+    const Stack = createNativeStackNavigator();
 
     return (
-        <Tabs.Navigator
-            screenOptions={{
-            }}
-        >
-            <Tabs.Screen
-                name="HomeTab"
-                component={HomeNavigator}
-                options={{
-                    title: "Home",
-                    tabBarIcon: ({ color, size }) => <Ionicons name="home" size={size} color={color} />,
-                    headerShown: false
-                }}
-            />
-
-            <Tabs.Screen
-                name="Cart"
+        <Stack.Navigator screenOptions={{ headerShown: false }}>
+            <Stack.Screen name="TabNavigator" component={TabNavigator} />
+            <Stack.Screen
+                name="CartModal"
                 component={CartScreen}
                 options={{
-                    tabBarIcon: ({ color, size }) => <Ionicons name="cart" size={size} color={color} />,
+                    presentation: 'modal',
+                    headerShown: true,
+                    title: 'Cart',
+                    animation: 'slide_from_right'
                 }}
             />
-
-            <Tabs.Screen
-                name="Info"
-                component={InfoScreen}
-                options={{
-                    tabBarIcon: ({ color, size }) => <Ionicons name="information-circle" size={size} color={color} />,
-                }}
-            />
-        </Tabs.Navigator>
+        </Stack.Navigator>
     );
 }
