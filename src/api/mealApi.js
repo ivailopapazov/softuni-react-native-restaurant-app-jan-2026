@@ -4,6 +4,14 @@ export function getAll() {
     return api.get('/meals');
 }
 
+export function getOne(mealId) {
+    if (!mealId) {
+        throw new Error('No ID provided!');
+    }
+
+    return api.get(`/meals/${mealId}`);
+}
+
 export function getAllByCategoryId(categoryId) {
     if (!categoryId) {
         throw new Error('No Category provided!');

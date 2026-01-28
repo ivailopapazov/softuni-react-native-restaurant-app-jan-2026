@@ -1,32 +1,41 @@
+import { useEffect, useState } from "react";
 import { ScrollView, Text, View, Image, StyleSheet } from "react-native";
 
-import { getItemById } from "../data/menuItems";
 import Button from "../components/Button";
 import QuantityStepper from "../components/QuantityStepper";
-import { useState } from "react";
+import { mealApi } from "../api";
 
 export default function DetailsScreen({
     route,
     navigation,
 }) {
     const [quantity, setQuantity] = useState(1);
+    const [meal, setMeal] = useState(null);
     const { itemId } = route.params;
 
-    const item = getItemById(itemId);
+    useEffect(() => {
+        mealApi.getOne(itemId)
+            .then(res => {
+                setMeal(res.data);
+            })
+            .catch(err => {
+                console.error('Error fetching meal details:', err);
+            });
+    }, [itemId]);
 
     return (
         <View style={styles.container}>
             <ScrollView>
                 <Image
-                    source={{ uri: item.imageUrl }}
+                    source={{ uri: meal?.imageUrl }}
                     style={styles.image}
                     resizeMode="cover"
                 />
 
                 <View style={styles.content}>
-                    <Text style={styles.name}>{item.name}</Text>
-                    <Text style={styles.description}>{item.description}</Text>
-                    <Text style={styles.basePrice}>Base price: ${item.price.toFixed(2)}</Text>
+                    <Text style={styles.name}>{meal?.name}</Text>
+                    <Text style={styles.description}>{meal?.description}</Text>
+                    <Text style={styles.basePrice}>Base price: ${meal?.price?.toFixed(2)}</Text>
 
                     <View style={styles.divider} />
 
@@ -45,7 +54,7 @@ export default function DetailsScreen({
                 <View style={styles.footer}>
                     <View style={styles.priceContainer}>
                         <Text style={styles.totalLabel}>Total:</Text>
-                        <Text style={styles.totalPrice}>${item.price.toFixed(2)}</Text>
+                        <Text style={styles.totalPrice}>${meal?.price && (meal?.price * quantity).toFixed(2)}</Text>
                     </View>
                     <View style={styles.footerButtons}>
                         <Button
