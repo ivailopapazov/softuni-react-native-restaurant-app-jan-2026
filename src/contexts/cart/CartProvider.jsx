@@ -54,6 +54,13 @@ export default function CartProvider({
         }));
     };
 
+    const clearCart = () => {
+        setState({
+            items: [],
+            total: 0,
+        });
+    }
+
     const removeItem = (index) => {
         setState((oldState) => {
             const itemForRemoval = oldState.items.find((_, i) => i === index);
@@ -77,6 +84,7 @@ export default function CartProvider({
         increaseQuantity,
         decreaseQuantity,
         removeItem,
+        clearCart,
     };
 
     return (

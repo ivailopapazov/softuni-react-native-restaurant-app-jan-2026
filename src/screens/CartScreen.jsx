@@ -3,9 +3,8 @@ import CartItem from '../components/CartItem';
 import { useCartContext } from '../contexts/cart/CartContext';
 import Button from '../components/Button';
 
-export default function CartScreen() {
+export default function CartScreen({navigation, route}) {
     const { items, total, totalPrice } = useCartContext();
-
     return (
         <View style={styles.container}>
             <FlatList
@@ -35,14 +34,13 @@ export default function CartScreen() {
                 <Button
                     style={styles.checkoutButton}
                     disabled={items.length === 0}
+                    onPress={() => navigation.navigate(route.name === 'CartModal' ? 'CheckoutModal' : 'Checkout')}
                     title="Proceed to Checkout"
                 />
             </View>
         </View>
     );
 }
-
-
 
 const styles = StyleSheet.create({
     container: {

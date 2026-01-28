@@ -8,6 +8,7 @@ export const CartConetxt = createContext({
     increaseQuantity(index) {},
     decreaseQuantity(index) {},
     removeItem(index) {},
+    clearCart() {},
 });
 
 export function useCartContext() {
