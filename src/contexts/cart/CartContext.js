@@ -6,6 +6,7 @@ export const CartConetxt = createContext({
     addToCart(meal, quantity) {},
     increaseQuantity(index) {},
     decreaseQuantity(index) {},
+    removeItem(index) {},
 });
 
 export function useCartContext() {

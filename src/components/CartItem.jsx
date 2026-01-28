@@ -9,7 +9,7 @@ export default function CartItem({
     quantity,
     price,
 }) {
-    const { increaseQuantity, decreaseQuantity } = useCartContext();
+    const { increaseQuantity, decreaseQuantity, removeItem } = useCartContext();
 
     return (
         <View style={styles.container}>
@@ -32,7 +32,7 @@ export default function CartItem({
                 />
 
                 {/* remove item */}
-                <TouchableOpacity style={styles.removeButton}>
+                <TouchableOpacity onPress={() => removeItem(index)} style={styles.removeButton}>
                     <Text style={styles.removeText}>Remove</Text>
                 </TouchableOpacity>
             </View>
