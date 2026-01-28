@@ -35,9 +35,43 @@ export default function CartProvider({
         total: 2,
     });
 
+    const addToCart = (meal, quantity, extras = {}) => {
+        setState(prevState => {
+            const existingItemIndex = prevState.items.findIndex(
+                item => item.meal.id === meal.id
+            );
+
+            let updatedItems;
+            if (existingItemIndex !== -1) {
+                // Item already exists, update quantity
+                updatedItems = [...prevState.items];
+                updatedItems[existingItemIndex] = {
+                    ...updatedItems[existingItemIndex],
+                    quantity: updatedItems[existingItemIndex].quantity + quantity,
+                };
+            } else {
+                // New item, add to cart
+                updatedItems = [
+                    ...prevState.items,
+                    {
+                        meal,
+                        extras,
+                        quantity,
+                    }
+                ];
+            }
+
+            return {
+                items: updatedItems,
+                total: updatedItems.reduce((sum, item) => sum + item.quantity, 0),
+            };
+        });
+    };
+
     const data = {
         items: state.items,
         total: state.total,
+        addToCart,
     };
 
     return (

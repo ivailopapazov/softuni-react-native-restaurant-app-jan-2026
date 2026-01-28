@@ -4,6 +4,7 @@ import { ScrollView, Text, View, Image, StyleSheet } from "react-native";
 import Button from "../components/Button";
 import QuantityStepper from "../components/QuantityStepper";
 import { mealApi } from "../api";
+import { useCartContext } from "../contexts/cart/CartContext";
 
 export default function DetailsScreen({
     route,
@@ -12,6 +13,7 @@ export default function DetailsScreen({
     const [quantity, setQuantity] = useState(1);
     const [meal, setMeal] = useState(null);
     const { itemId } = route.params;
+    const { addToCart } = useCartContext();
 
     useEffect(() => {
         mealApi.getOne(itemId)
@@ -60,13 +62,17 @@ export default function DetailsScreen({
                         <Button
                             title="Add to Cart"
                             style={styles.addButton}
-                        // todo add onPress handler
+                            onPress={() => {
+                                if (meal) {
+                                    addToCart(meal, quantity);
+                                    navigation.navigate('CartModal');
+                                }
+                            }}
                         />
                         <Button
                             title="View Cart"
                             variant="outline"
                             style={styles.viewCartButton}
-                            // todo add onPress handler
                             onPress={() => navigation.navigate('CartModal')}
                         />
                     </View>
