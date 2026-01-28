@@ -63,7 +63,7 @@ export default function CartProvider({
 
             return {
                 items: updatedItems,
-                total: updatedItems.length,
+                total: updatedItems.reduce((sum, item) => sum + item.quantity, 0),
             };
         });
     };

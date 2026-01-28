@@ -63,8 +63,10 @@ export default function DetailsScreen({
                             title="Add to Cart"
                             style={styles.addButton}
                             onPress={() => {
-                                addToCart(meal, quantity);
-                                navigation.navigate('CartModal');
+                                if (meal) {
+                                    addToCart(meal, quantity);
+                                    navigation.navigate('CartModal');
+                                }
                             }}
                         />
                         <Button
