@@ -4,6 +4,7 @@ import HomeNavigator from "./HomeNavigator";
 import CartScreen from "../screens/CartScreen";
 import InfoScreen from "../screens/InfoScreen";
 import { Ionicons } from "@expo/vector-icons";
+import CartNavigator from "./CartNavigator";
 
 export default function TabNavigator() {
     const Tabs = createBottomTabNavigator();
@@ -24,10 +25,11 @@ export default function TabNavigator() {
             />
 
             <Tabs.Screen
-                name="Cart"
-                component={CartScreen}
+                name="CartStack"
+                component={CartNavigator}
                 options={{
                     tabBarIcon: ({ color, size }) => <Ionicons name="cart" size={size} color={color} />,
+                    headerShown: false
                 }}
             />
 
